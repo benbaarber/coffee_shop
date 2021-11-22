@@ -73,6 +73,12 @@
 </section>
 
 <a href="/artists/{{ artist.id }}/edit"><button class="btn btn-primary btn-lg">Edit</button></a>
+<p></p>
+<form action="/artists/{{ artist.id }}/remove" method="post">
+	<input type="hidden" value="{{ artist.id }}">
+	<button type="submit" class="btn btn-primary btn-lg">Remove</button>
+</form>
+
 
 {% endblock %}
 
