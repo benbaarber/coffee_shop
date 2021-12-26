@@ -3,10 +3,10 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 class Show(db.Model):
-    __tablename__ = 'Show'
+    __tablename__ = 'shows'
 
-    venue_id = db.Column(db.Integer, db.ForeignKey('Venue.id'), primary_key=True)
-    artist_id = db.Column(db.Integer, db.ForeignKey('Artist.id'), primary_key=True)
+    venue_id = db.Column(db.Integer, db.ForeignKey('venues.id'), primary_key=True)
+    artist_id = db.Column(db.Integer, db.ForeignKey('artists.id'), primary_key=True)
     start_time = db.Column(db.DateTime, primary_key=True)
     venue = db.relationship('Venue', back_populates='artists')
     artist = db.relationship('Artist', back_populates='venues')
@@ -15,7 +15,7 @@ class Show(db.Model):
         return super().__repr__()
 
 class Venue(db.Model):
-    __tablename__ = 'Venue'
+    __tablename__ = 'venues'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True)
@@ -35,7 +35,7 @@ class Venue(db.Model):
         return super().__repr__()
 
 class Artist(db.Model):
-    __tablename__ = 'Artist'
+    __tablename__ = 'artists'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True)

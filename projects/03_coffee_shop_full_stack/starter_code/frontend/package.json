@@ -27,10 +27,10 @@
     "@ionic/angular": "^4.1.0",
     "core-js": "^2.5.4",
     "jwt-decode": "^2.2.0",
+    "node-sass": "^4.14.1",
     "rxjs": "~6.5.1",
     "tslib": "^1.9.0",
-    "zone.js": "~0.8.29",
-    "lodash": "^4.17.13"
+    "zone.js": "~0.8.29"
   },
   "devDependencies": {
     "@angular-devkit/architect": "~0.13.8",
@@ -57,6 +57,4 @@
     "ts-node": "~8.1.0",
     "tslint": "~5.16.0",
     "typescript": "~3.1.6"
-  },
-  "description": "An Ionic project"
-}
+  }}

@@ -102,25 +102,27 @@ def show_venue(venue_id):
   # shows the venue page with the given venue_id
   
   venue = db.session.query(Venue).get(venue_id)
-  past_shows = db.session.query(Show).filter(Show.venue_id == venue_id, Show.start_time < datetime.now())
-  upcoming_shows = db.session.query(Show).filter(Show.venue_id == venue_id, Show.start_time > datetime.now())
+  past_shows = db.session.query(Show, Artist.id, Artist.name, Artist.image_link).\
+    join(Artist).filter(Show.venue_id == venue.id, Show.start_time < datetime.now()).all()
+  upcoming_shows = db.session.query(Show, Artist.id, Artist.name, Artist.image_link).\
+    join(Artist).filter(Show.venue_id == venue.id, Show.start_time > datetime.now()).all()
   PSdata = []
   USdata = []
 
   for show in past_shows:
     PSdata.append({
-      'artist_id': show.artist_id,
-      'artist_name': db.session.query(Artist).get(show.artist_id).name,
-      'artist_image_link': db.session.query(Artist).get(show.artist_id).image_link,
-      'start_time': str(show.start_time)
+      'artist_id': show[1],
+      'artist_name': show[2],
+      'artist_image_link': show[3],
+      'start_time': str(show[0].start_time)
     })
 
   for show in upcoming_shows:
     USdata.append({
-      'artist_id': show.artist_id,
-      'artist_name': db.session.query(Artist).get(show.artist_id).name,
-      'artist_image_link': db.session.query(Artist).get(show.artist_id).image_link,
-      'start_time': str(show.start_time)
+      'artist_id': show[1],
+      'artist_name': show[2],
+      'artist_image_link': show[3],
+      'start_time': str(show[0].start_time)
     })
 
   data = {
@@ -236,25 +238,27 @@ def show_artist(artist_id):
   # shows the artist page with the given artist_id
   
   artist = db.session.query(Artist).get(artist_id)
-  past_shows = db.session.query(Show).filter(Show.artist_id == artist_id, Show.start_time < datetime.now())
-  upcoming_shows = db.session.query(Show).filter(Show.artist_id == artist_id, Show.start_time > datetime.now())
+  past_shows = db.session.query(Show, Venue.id, Venue.name, Venue.image_link).\
+    join(Venue).filter(Show.artist_id == artist.id, Show.start_time < datetime.now()).all()
+  upcoming_shows = db.session.query(Show, Venue.id, Venue.name, Venue.image_link).\
+    join(Venue).filter(Show.artist_id == artist.id, Show.start_time > datetime.now()).all()
   PSdata = []
   USdata = []
 
   for show in past_shows:
     PSdata.append({
-      'venue_id': show.venue_id,
-      'venue_name': db.session.query(Venue).get(show.venue_id).name,
-      'venue_image_link': db.session.query(Venue).get(show.venue_id).image_link,
-      'start_time': str(show.start_time)
+      'venue_id': show[1],
+      'venue_name': show[2],
+      'venue_image_link': show[3],
+      'start_time': str(show[0].start_time)
     })
 
   for show in upcoming_shows:
     USdata.append({
-      'venue_id': show.venue_id,
-      'venue_name': db.session.query(Venue).get(show.venue_id).name,
-      'venue_image_link': db.session.query(Venue).get(show.venue_id).image_link,
-      'start_time': str(show.start_time)
+      'venue_id': show[1],
+      'venue_name': show[2],
+      'venue_image_link': show[3],
+      'start_time': str(show[0].start_time)
     })
 
   data = {

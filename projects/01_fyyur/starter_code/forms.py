@@ -1,7 +1,20 @@
 from datetime import datetime
 from flask_wtf import Form
 from wtforms import StringField, SelectField, SelectMultipleField, DateTimeField, BooleanField
-from wtforms.validators import DataRequired, AnyOf, URL
+from wtforms.validators import DataRequired, AnyOf, URL, ValidationError
+
+# Below is an attempt at implementing a custom validation. Please ignore as I am only keeping this for future reference.
+
+# class Unique(object):
+#     def __init__(self, model, field, message='This name has already been taken.'):
+#         self.model = model
+#         self.field = field
+
+#     def __call__(self, form, field):
+#         if not field.raw_data:
+#             check = self.model.query.filter(self.field == field.data).first()
+#             if check:
+#                 raise ValidationError(self.message)
 
 class ShowForm(Form):
     artist_id = StringField(
@@ -86,7 +99,7 @@ class VenueForm(Form):
         'phone'
     )
     image_link = StringField(
-        'image_link'
+        'image_link', validators=[URL()]
     )
     genres = SelectMultipleField(
         # TODO implement enum restriction
@@ -117,7 +130,7 @@ class VenueForm(Form):
         'facebook_link', validators=[URL()]
     )
     website_link = StringField(
-        'website_link'
+        'website_link', validators=[URL()]
     )
 
     seeking_talent = BooleanField( 'seeking_talent' )
@@ -196,7 +209,7 @@ class ArtistForm(Form):
         'phone'
     )
     image_link = StringField(
-        'image_link'
+        'image_link', validators=[URL()]
     )
     genres = SelectMultipleField(
         'genres', validators=[DataRequired()],
@@ -228,7 +241,7 @@ class ArtistForm(Form):
      )
 
     website_link = StringField(
-        'website_link'
+        'website_link', validators=[URL()]
      )
 
     seeking_venue = BooleanField( 'seeking_venue' )

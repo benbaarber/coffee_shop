@@ -12,10 +12,6 @@ from models import setup_db, Question, Category
 
 QUESTIONS_PER_PAGE = 10
 
-def check_page(request, selection, per_page):
-  page = request.args.get('page', 1, type=int)
-
-
 def serialize(selection):
   return [item.format() for item in selection]
 
@@ -144,7 +140,7 @@ def create_app(test_config=None):
         })
 
       else:
-        new_question = Question(question=body.get('question'), answer=body.get('answer'), category=body.get('category') ,difficulty=body.get('difficulty'))
+        new_question = Question(question=body.get('question'), answer=body.get('answer'), category=body.get('category'), difficulty=body.get('difficulty'))
         
         if new_question.question and new_question.answer:
           new_question.insert()
